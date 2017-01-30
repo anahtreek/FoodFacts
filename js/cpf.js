@@ -5,12 +5,12 @@ module.exports = function(csvFile, jsonFile) {
   let CE = ['France', 'Belgium', 'Germany', 'Switzerland', 'Netherlands'];
   let SE = ['Portugal', 'Greece', 'Italy', 'Spain', 'Croatia', 'Albania'];
   let carbo = [0, 0, 0];
-  let protien = [0, 0, 0];
+  let protein = [0, 0, 0];
   let fat = [0, 0, 0];
   let linenumber = 0;
   let countryIndex;
   let carboIndex;
-  let protienIndex;
+  let proteinIndex;
   let fatIndex;
   let index;
   let ret;
@@ -43,7 +43,7 @@ module.exports = function(csvFile, jsonFile) {
         let title = currentLine;
         countryIndex = title.indexOf('countries_en');
         carboIndex = title.indexOf('carbohydrates_100g');
-        protienIndex = title.indexOf('proteins_100g');
+        proteinIndex = title.indexOf('proteins_100g');
         fatIndex = title.indexOf('fat_100g');
         linenumber = 1;
       }
@@ -53,7 +53,7 @@ module.exports = function(csvFile, jsonFile) {
           index = regionindex(x[j]);
           if(index !== -1) {
             carbo[index] = carbo[index] + Number(currentLine[carboIndex]);
-            protien[index] = protien[index] + Number(currentLine[protienIndex]);
+            protein[index] = protein[index] + Number(currentLine[proteinIndex]);
             fat[index] = fat[index] + Number(currentLine[fatIndex]);
           }
         }
@@ -62,7 +62,7 @@ module.exports = function(csvFile, jsonFile) {
         index = regionindex(currentLine[countryIndex]);
         if(index !== -1) {
           carbo[index] = carbo[index] + Number(currentLine[carboIndex]);
-          protien[index] = protien[index] + Number(currentLine[protienIndex]);
+          protein[index] = protein[index] + Number(currentLine[proteinIndex]);
           fat[index] = fat[index] + Number(currentLine[fatIndex]);
         }
       }
@@ -72,7 +72,7 @@ module.exports = function(csvFile, jsonFile) {
         let obj = {};
         obj.region = region[i];
         obj.carbohydrates = carbo[i];
-        obj.protien = protien[i];
+        obj.protein = protein[i];
         obj.fat = fat[i];
         cpf.push(obj);
       }
