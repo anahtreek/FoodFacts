@@ -1,9 +1,7 @@
-/*  let csvFile = '../inputdata/FoodFacts.csv';
-let jsonFile = '../outputdata/sugarsalt.json';*/
 module.exports = function(csvFile, jsonFile) {
   let ss = [];
   let c;
-  c = ['Netherlands', 'Canada', 'UK/USA', 'Australia',
+  c = ['Netherlands', 'Canada', 'United Kingdom', 'Australia',
    'France', 'Germany', 'Spain', 'South Africa'];
   let sugar = [0, 0, 0, 0, 0, 0, 0, 0];
   let salt = [0, 0, 0, 0, 0, 0, 0, 0];

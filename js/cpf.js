@@ -1,5 +1,3 @@
-/*  let csvFile = '../inputdata/FoodFacts.csv';
-let jsonFile = '../outputdata/cpf.json';*/
 module.exports = function(csvFile, jsonFile) {
   let cpf = [];
   let region = ['North Europe', 'Central Europe', 'South Europe'];
@@ -32,9 +30,6 @@ module.exports = function(csvFile, jsonFile) {
   if(!csvFile || !jsonFile) {
     ret = 'Enter parameters';
   }
-  /*  if(typeof(csvFile) != string || typeof(jsonFile) != string) {
-    return 'Enter String parameters';
-  }*/
   else {
     const fs = require('fs');
     const readline = require('readline');
