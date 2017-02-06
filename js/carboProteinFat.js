@@ -1,5 +1,5 @@
 module.exports = function(csvFile, jsonFile) {
-  let cpf = [];
+  let carboProtienFat = [];
   let region = ['North Europe', 'Central Europe', 'South Europe'];
   let NE = ['United Kingdom', 'Denmark', 'Sweden', 'Norway'];
   let CE = ['France', 'Belgium', 'Germany', 'Switzerland', 'Netherlands'];
@@ -14,6 +14,7 @@ module.exports = function(csvFile, jsonFile) {
   let fatIndex;
   let index;
   let ret;
+  // To find the index of region
   function regionindex(cntr) {
     let ind = -1;
     if(cntr && NE.includes(cntr)) {
@@ -27,6 +28,7 @@ module.exports = function(csvFile, jsonFile) {
     }
     return ind;
   }
+  // Check if the CSV and JSON file paths are given in parameters
   if(!csvFile || !jsonFile) {
     ret = 'Enter parameters';
   }
@@ -37,6 +39,7 @@ module.exports = function(csvFile, jsonFile) {
     let instream = fs.createReadStream(csvFile);
     let outstream = new Stream();
     let rl = readline.createInterface(instream, outstream);
+    // While reading every line
     rl.on('line', function(line) {
       let currentLine = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
       if(linenumber === 0) {
@@ -67,6 +70,7 @@ module.exports = function(csvFile, jsonFile) {
         }
       }
     });
+    // Once the whole file is read line by line
     rl.on('close', function() {
       for(let i = 0; i < region.length; i = i + 1) {
         let obj = {};
@@ -74,11 +78,11 @@ module.exports = function(csvFile, jsonFile) {
         obj.carbohydrates = carbo[i];
         obj.protein = protein[i];
         obj.fat = fat[i];
-        cpf.push(obj);
+        carboProtienFat.push(obj);
       }
-      fs.writeFileSync(jsonFile, JSON.stringify(cpf));
+      fs.writeFileSync(jsonFile, JSON.stringify(carboProtienFat));
     });
-    if(cpf) {
+    if(carboProtienFat) {
       ret = 'JSON written successfully';
     }
   }

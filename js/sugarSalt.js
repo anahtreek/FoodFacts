@@ -1,7 +1,7 @@
 module.exports = function(csvFile, jsonFile) {
-  let ss = [];
-  let c;
-  c = ['Netherlands', 'Canada', 'United Kingdom', 'Australia',
+  let sugarSalt = [];
+  let country;
+  country = ['Netherlands', 'Canada', 'United Kingdom', 'Australia',
    'France', 'Germany', 'Spain', 'South Africa'];
   let sugar = [0, 0, 0, 0, 0, 0, 0, 0];
   let salt = [0, 0, 0, 0, 0, 0, 0, 0];
@@ -11,17 +11,18 @@ module.exports = function(csvFile, jsonFile) {
   let saltIndex;
   let index;
   let ret;
-  function cntrindex(cntr) {
-    let ind = -1;
-    if(cntr) {
-      for(let i = 0; i < c.length; i = i + 1) {
-        if(cntr.includes(c[i])) {
-          ind = i;
-        }
-      }
-    }
-    return ind;
-  }
+  // To find the index of region
+  // function cntrindex(cntr) {
+  //   let ind = -1;
+  //   if(cntr) {
+  //     for(let i = 0; i < country.length; i = i + 1) {
+  //       if(cntr.includes(country[i])) {
+  //         ind = i;
+  //       }
+  //     }
+  //   }
+  //   return ind;
+  // }
   if(!csvFile || !jsonFile) {
     ret = 'Enter parameters';
   }
@@ -44,7 +45,7 @@ module.exports = function(csvFile, jsonFile) {
       if(currentLine[countryIndex] && currentLine[countryIndex].includes(',')) {
         let x = currentLine[countryIndex].split(',');
         for(let j = 0; j < x.length; j = j + 1) {
-          index = cntrindex(x[j]);
+          index = country.indexOf(x[j]);
           if(index !== -1) {
             sugar[index] = sugar[index] + Number(currentLine[sugarIndex]);
             salt[index] = salt[index] + Number(currentLine[saltIndex]);
@@ -52,7 +53,7 @@ module.exports = function(csvFile, jsonFile) {
         }
       }
       else if(currentLine[countryIndex]) {
-        index = cntrindex(currentLine[countryIndex]);
+        index = country.indexOf(currentLine[countryIndex]);
         if(index !== -1) {
           sugar[index] = sugar[index] + Number(currentLine[sugarIndex]);
           salt[index] = salt[index] + Number(currentLine[saltIndex]);
@@ -60,17 +61,17 @@ module.exports = function(csvFile, jsonFile) {
       }
     });
     rl.on('close', function() {
-      for(let i = 0; i < c.length; i = i + 1) {
+      for(let i = 0; i < country.length; i = i + 1) {
         let obj = {};
-        obj.country = c[i];
+        obj.country = country[i];
         obj.sugar = sugar[i];
         obj.salt = salt[i];
-        ss.push(obj);
+        sugarSalt.push(obj);
       }
-      fs.writeFileSync(jsonFile, JSON.stringify(ss));
+      fs.writeFileSync(jsonFile, JSON.stringify(sugarSalt));
     });
-    if(ss) {
-      ret = 'JSON written successfully';
+    if(sugarSalt) {
+      ret = 'JSON written succesugarSaltfully';
     }
   }
   return ret;
